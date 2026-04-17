@@ -12,23 +12,30 @@ export default function App() {
 
   const navigate = (to, data = null) => {
     setPage(to);
-    if (data) {
-      if (to === "results") setSearchState(data);
-      if (to === "book") setSelectedBook(data);
+
+    if (to === "results") {
+      setSearchState(data);
     }
+
+    if (to === "book") {
+      setSelectedBook(data);
+    }
+
     window.scrollTo(0, 0);
   };
 
   return (
     <div className="app">
       {page === "home" && <Home onEnter={() => navigate("search")} />}
+
       {page === "search" && (
         <Search
           onSearch={(data) => navigate("results", data)}
           onBookSelect={(book) => navigate("book", book)}
-          onBackHome={() => setCurrentPage("home")}
+          onBackHome={() => navigate("home")}
         />
       )}
+
       {page === "results" && (
         <SearchResults
           searchState={searchState}
@@ -36,6 +43,7 @@ export default function App() {
           onBookSelect={(book) => navigate("book", book)}
         />
       )}
+
       {page === "book" && (
         <BookDetails
           book={selectedBook}

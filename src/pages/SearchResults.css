@@ -1,223 +1,143 @@
-.search-results {
-  min-height: 100vh;
-  background: var(--ink);
-  position: relative;
-  padding-bottom: 8rem;
-  animation: resultsEnter 0.6s ease forwards;
-}
+/* ─────────────────────────────────────────────────────────────────────────────
+   SearchResults.css  ← ADD these rules to your existing file
+   Phase 2.5 additions — skeleton cards, error state, source notice
+   ───────────────────────────────────────────────────────────────────────────── */
 
-@keyframes resultsEnter {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
+/* ── Source notice ────────────────────────────────────────────────────────── */
 
-.results__bg {
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 50% -10%, rgba(92,61,30,0.12) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-/* === NAV === */
-.results__nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2rem 3rem;
-  border-bottom: 1px solid rgba(200,151,58,0.08);
-}
-
-.results__back {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--ash);
-  opacity: 0.6;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: none;
-  border: none;
-}
-
-.results__back:hover {
-  opacity: 1;
-  color: var(--gold);
-}
-
-.results__wordmark {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  letter-spacing: 0.35em;
-  color: var(--gold);
-  text-transform: uppercase;
-  opacity: 0.6;
-}
-
-/* === HEADER === */
-.results__header {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 3rem 2rem 2rem;
-  text-align: center;
-}
-
-.results__mode-badge {
+.source-notice {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary, #888);
+  background: var(--color-bg-secondary, #f5f2ed);
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-top: 8px;
   display: inline-block;
-  padding: 0.3rem 1rem;
-  border: 1px solid rgba(200,151,58,0.25);
-  border-radius: 20px;
-  font-family: var(--font-display);
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.7;
-  margin-bottom: 1.2rem;
 }
 
-.results__query {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: 1.4rem;
-  color: var(--parchment);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
+/* ── Results count ────────────────────────────────────────────────────────── */
 
-.query-quote {
-  color: var(--gold);
-  opacity: 0.5;
-  margin: 0 0.2rem;
-}
-
-.results__tags-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
+.results-count {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #666);
   margin-bottom: 1rem;
 }
 
-.result-tag {
-  padding: 0.3rem 0.9rem;
-  background: rgba(200,151,58,0.1);
-  border: 1px solid rgba(200,151,58,0.3);
-  border-radius: 20px;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  color: var(--gold);
-  font-style: italic;
-}
+/* ── Error state ──────────────────────────────────────────────────────────── */
 
-.results__count {
-  font-family: var(--font-display);
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--ash);
-  opacity: 0.5;
-}
-
-/* === LIST === */
-.results__list {
-  max-width: 820px;
-  margin: 1rem auto 0;
-  padding: 0 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.result-item {
-  animation: cardSlide 0.5s ease both;
-}
-
-@keyframes cardSlide {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* === EMPTY === */
-.results__empty {
+.error-state {
   text-align: center;
-  padding: 5rem 2rem;
+  padding: 3rem 1rem;
 }
 
-.empty__icon {
-  font-size: 3rem;
-  color: var(--ash);
-  opacity: 0.3;
+.error-message {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary, #666);
+  margin-bottom: 1rem;
+}
+
+.retry-btn {
+  font-size: 0.85rem;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border, #ccc);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--color-text-primary, #1a1a1a);
+  transition: background 0.15s;
+}
+
+.retry-btn:hover {
+  background: var(--color-bg-secondary, #f5f2ed);
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────────── */
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-state p {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary, #666);
+  margin-bottom: 0.5rem;
+}
+
+.empty-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary, #999);
   margin-bottom: 1.5rem;
 }
 
-.empty__title {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  letter-spacing: 0.1em;
-  color: var(--parchment);
-  opacity: 0.6;
-  margin-bottom: 0.8rem;
+/* ── Skeleton cards ───────────────────────────────────────────────────────── */
+
+/*
+  CONCEPT: CSS shimmer animation
+  The skeleton cards use a gradient that slides from left to right
+  to simulate a "loading" shimmer. This is done with:
+  1. A gradient background on each skeleton element
+  2. background-size: 200% so the gradient is wider than the element
+  3. An animation that shifts background-position from right to left
+  The result is a travelling shimmer effect.
+*/
+
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
 
-.empty__body {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--ash);
-  max-width: 400px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-base, #e8e4dc) 25%,
+    var(--skeleton-shine, #f0ece4) 50%,
+    var(--skeleton-base, #e8e4dc) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: 4px;
 }
 
-.empty__back {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--gold);
-  opacity: 0.7;
-  cursor: pointer;
-  background: none;
-  border: none;
-  transition: opacity 0.2s;
+/* Dark mode skeleton colours */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --skeleton-base: #2a2a2a;
+    --skeleton-shine: #3a3a3a;
+  }
 }
 
-.empty__back:hover { opacity: 1; }
-
-/* === FOOTER === */
-.results__footer {
-  max-width: 820px;
-  margin: 2rem auto 0;
-  padding: 1.5rem 2rem;
-  border-top: 1px solid rgba(200,151,58,0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+.skeleton-card {
+  cursor: default;
+  pointer-events: none;
 }
 
-.results__new-search {
-  font-family: var(--font-accent);
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--gold);
-  opacity: 0.7;
-  cursor: pointer;
-  background: none;
-  border: none;
-  transition: opacity 0.2s;
+.skeleton-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
 
-.results__new-search:hover { opacity: 1; }
+.skeleton-body {
+  padding: 0 2px;
+}
 
-.results__note {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  color: var(--ash);
-  opacity: 0.4;
-  font-style: italic;
-  text-align: right;
+.skeleton-title {
+  height: 14px;
+  width: 80%;
+  margin-bottom: 8px;
+}
+
+.skeleton-author {
+  height: 12px;
+  width: 55%;
+  margin-bottom: 10px;
+}
+
+.skeleton-bar {
+  height: 4px;
+  width: 65%;
+  border-radius: 2px;
 }

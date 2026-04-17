@@ -166,12 +166,12 @@ export default function Home({ onEnter }) {
         )}
       </div>
 
-      {/* Bottom tagline */}
+      {/* Bottom tagline
       <div className="home__footer">
         <p className="home__tagline">
           <em>not by title or author, but by feeling, fragment, image, or memory</em>
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }

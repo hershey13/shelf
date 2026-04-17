@@ -4,6 +4,9 @@ import AnatomyFilter from "../components/AnatomyFilter";
 import MoodBoard from "../components/MoodBoard";
 import SearchExamples from "../components/SearchExamples";
 import { searchBooks } from "../data/books";
+import FragmentInput from '../components/FragmentInput'
+import ImageSearch from '../components/ImageSearch'
+
 import "./Search.css";
 
 const SEARCH_MODES = [
@@ -118,7 +121,16 @@ export default function Search({ onSearch, onBookSelect, onBackHome }) {
     <div className="search-hub">
       {/* Ambient bg */}
       <div className="hub__bg" />
-     <button className="return-home-btn" onClick={onBackHome}>← Return Home</button>
+     <button
+  type="button"
+  className="return-home-btn"
+  onClick={() => {
+    console.log("home clicked");
+    onBackHome();
+  }}
+>
+  ← Return Home
+</button>
 
       {/* Header */}
       <header className="hub__header">
@@ -193,7 +205,23 @@ export default function Search({ onSearch, onBookSelect, onBackHome }) {
         )}
 
         {/* Image search */}
-        {activeMode === "image" && (
+        {/* Image search */}
+{activeMode === "image" && (
+  <div className="search-area__input-block">
+    <ImageSearch
+      onSearch={(data) => {
+        onSearch({
+          query: data.query,
+          mode: 'image',
+          tags: [],
+          anatomy: data.anatomy,
+          modeLabel: 'Image',
+        })
+      }}
+    />
+  </div>
+)}
+        {/* {activeMode === "image" && (
           <div className="search-area__input-block">
             {imageStep === "upload" && (
               <div className="image-upload">
@@ -231,7 +259,7 @@ export default function Search({ onSearch, onBookSelect, onBackHome }) {
               </div>
             )}
           </div>
-        )}
+        )} */}
 
         {/* Search button */}
         {activeMode !== "mood" && (

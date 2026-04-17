@@ -1,0 +1,151 @@
+/* src/components/OCRConfirm.css */
+
+.ocr-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────────── */
+
+.ocr-confirm__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ocr-confirm__title {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary, #666);
+  font-style: italic;
+}
+
+.ocr-confirm__confidence {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.ocr-confirm__confidence--green {
+  background: rgba(29,158,117,0.1);
+  color: #0F6E56;
+}
+
+.ocr-confirm__confidence--amber {
+  background: rgba(186,117,23,0.1);
+  color: #633806;
+}
+
+.ocr-confirm__confidence--red {
+  background: rgba(226,75,74,0.1);
+  color: #791F1F;
+}
+
+/* ── Textarea ───────────────────────────────────────────────────────────────── */
+
+.ocr-confirm__textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px 16px;
+  font-size: 0.92rem;
+  font-family: var(--font-serif, Georgia, serif);
+  line-height: 1.7;
+  color: var(--color-text, #1a1a1a);
+  background: var(--color-bg, #fff);
+  border: 1px solid var(--color-accent, #6b5b45);
+  border-radius: 10px;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.ocr-confirm__textarea:focus {
+  border-color: var(--color-accent, #6b5b45);
+  box-shadow: 0 0 0 3px rgba(107,91,69,0.08);
+}
+
+/* ── Hint ───────────────────────────────────────────────────────────────────── */
+
+.ocr-confirm__hint {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #aaa);
+  margin: 0;
+}
+
+/* ── Anatomy ────────────────────────────────────────────────────────────────── */
+
+.ocr-confirm__anatomy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ocr-confirm__anatomy-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted, #999);
+}
+
+.ocr-confirm__anatomy-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Reuse anatomy-pill class from FragmentInput.css */
+.anatomy-pill {
+  font-size: 0.78rem;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border, rgba(0,0,0,0.12));
+  background: transparent;
+  color: var(--color-text-secondary, #555);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.anatomy-pill:hover { border-color: var(--color-accent, #6b5b45); color: var(--color-accent, #6b5b45); }
+.anatomy-pill.active { background: var(--color-accent, #6b5b45); border-color: var(--color-accent, #6b5b45); color: #fff; }
+
+/* ── Actions ────────────────────────────────────────────────────────────────── */
+
+.ocr-confirm__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ocr-confirm__back {
+  font-size: 0.8rem;
+  color: var(--color-text-muted, #aaa);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 0;
+  transition: color 0.15s;
+}
+
+.ocr-confirm__back:hover { color: var(--color-text-secondary, #666); }
+
+.ocr-confirm__search {
+  padding: 10px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--color-accent, #6b5b45);
+  background: var(--color-accent, #6b5b45);
+  color: #fff;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.ocr-confirm__search:hover:not(:disabled) { opacity: 0.85; }
+.ocr-confirm__search:disabled { opacity: 0.35; cursor: default; }

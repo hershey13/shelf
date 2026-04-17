@@ -1,0 +1,243 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   src/components/FragmentInput.css
+   Phase 3 — Fragment Input Styles
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.fragment-input {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+/* ── Textarea area ──────────────────────────────────────────────────────────── */
+
+.fragment-input__area {
+  position: relative;
+  border: 1px solid var(--color-border, rgba(0,0,0,0.15));
+  border-radius: 12px;
+  background: var(--color-bg, #fff);
+  transition: border-color 0.2s;
+}
+
+.fragment-input__area:focus-within {
+  border-color: var(--color-accent, #6b5b45);
+}
+
+.fragment-input__area.has-text {
+  border-color: var(--color-accent, #6b5b45);
+}
+
+.fragment-input__textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 16px 18px;
+  font-size: 0.95rem;
+  font-family: var(--font-serif, Georgia, serif);
+  line-height: 1.7;
+  color: var(--color-text, #1a1a1a);
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+  border-radius: 12px;
+
+  /* Paste flash animation — see JS */
+  --paste-flash: 0;
+  background-color: color-mix(
+    in srgb,
+    var(--color-accent-light, #f5f0ea) calc(var(--paste-flash) * 100%),
+    transparent
+  );
+  transition: background-color 0.3s;
+}
+
+.fragment-input__textarea::placeholder {
+  color: var(--color-text-muted, #999);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.fragment-input__char-count {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  font-size: 0.7rem;
+  color: var(--color-text-muted, #bbb);
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.fragment-input__char-count.long {
+  color: var(--color-accent, #6b5b45);
+}
+
+/* ── Anatomy selector ───────────────────────────────────────────────────────── */
+
+.fragment-input__anatomy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fragment-input__anatomy-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted, #999);
+}
+
+.fragment-input__anatomy-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.anatomy-pill {
+  font-size: 0.78rem;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border, rgba(0,0,0,0.12));
+  background: transparent;
+  color: var(--color-text-secondary, #555);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.anatomy-pill:hover {
+  border-color: var(--color-accent, #6b5b45);
+  color: var(--color-accent, #6b5b45);
+}
+
+.anatomy-pill.active {
+  background: var(--color-accent, #6b5b45);
+  border-color: var(--color-accent, #6b5b45);
+  color: #fff;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────────── */
+
+.fragment-input__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fragment-input__hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fragment-input__stats {
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #aaa);
+}
+
+.fragment-input__shortcut {
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #bbb);
+}
+
+.fragment-input__submit {
+  padding: 10px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--color-accent, #6b5b45);
+  background: var(--color-accent, #6b5b45);
+  color: #fff;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.fragment-input__submit:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.fragment-input__submit:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.fragment-input__submit:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ── Examples ───────────────────────────────────────────────────────────────── */
+
+.fragment-input__examples {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.fragment-input__examples-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted, #bbb);
+  margin: 0;
+}
+
+.fragment-input__example-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fragment-input__example {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.12s;
+}
+
+.fragment-input__example:hover {
+  background: var(--color-bg-secondary, #f5f2ed);
+}
+
+.example-anatomy {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent, #6b5b45);
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.example-text {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary, #666);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ── Dark mode ──────────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  .fragment-input__area {
+    background: var(--color-bg-secondary, #1a1a1a);
+  }
+
+  .fragment-input__textarea {
+    color: var(--color-text, #e8e4dc);
+  }
+
+  .anatomy-pill.active {
+    color: #fff;
+  }
+}

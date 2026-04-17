@@ -88,16 +88,26 @@
 }
 
 /* === HEADER === */
-.home__header {
-  position: fixed;
+/* .home__header {
+  position: absolute;
   top: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.5rem;
   z-index: 10;
-  animation: fadeIn 1.5s ease forwards;
+  
+} */
+ .home__header {
+  position: absolute;
+  top: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
 }
 
 .home__wordmark {
@@ -106,6 +116,7 @@
   letter-spacing: 0.35em;
   color: var(--gold);
   text-transform: uppercase;
+  text-align: center;
 }
 
 .ornament {

@@ -1,4 +1,4 @@
-export const BOOKS = [
+export const MOCK_BOOKS = [
   {
     id: "1",
     title: "The Secret History",
@@ -185,7 +185,7 @@ export const ANATOMY_LOCATIONS = [
 export function searchBooks(query, mode, tags, anatomy) {
   if (!query && !tags?.length) return [];
 
-  let results = [...BOOKS];
+  let results = [...MOCK_BOOKS];
 
   if (mode === "fragment" || mode === "vibe") {
     if (query) {

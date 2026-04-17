@@ -1,96 +1,94 @@
-import BookCard from "../components/BookCard";
-import "./SearchResults.css";
-
-const MODE_LABELS = {
-  fragment: "Fragment search",
-  vibe: "Vibe search",
-  mood: "Mood board",
-  image: "Image search",
-  epilogue: "Epilogue search",
-  special: "Special mentions",
-};
+import { useBookSearch } from '../hooks/useBookSearch'
+import BookCard from '../components/BookCard'
+import AnatomyFilter from '../components/AnatomyFilter'
+import './SearchResults.css'
 
 export default function SearchResults({ searchState, onBack, onBookSelect }) {
-  const { query, mode, tags, results, modeLabel } = searchState || {};
-  const hasResults = results && results.length > 0;
+  const {
+    mode = 'vibe',
+    query = '',
+    tags = [],
+    anatomy = '',
+  } = searchState || {}
+
+  const { results, loading, error, source, refetch } = useBookSearch({
+    mode,
+    query,
+    tags,
+    anatomy,
+    enabled: !!(query?.trim() || tags?.length),
+  })
 
   return (
-    <div className="search-results">
-      <div className="results__bg" />
-
-      {/* Back nav */}
-      <div className="results__nav">
-        <button className="results__back" onClick={onBack}>
-          ← back to search
-        </button>
-        <div className="results__wordmark">shelf</div>
-      </div>
-
-      {/* Search summary */}
-      <div className="results__header">
-        <div className="results__mode-badge">
-          <span>{MODE_LABELS[mode] || modeLabel}</span>
-        </div>
-        {query && (
-          <div className="results__query">
-            <span className="query-quote">"</span>
-            {query}
-            <span className="query-quote">"</span>
-          </div>
-        )}
-        {tags && tags.length > 0 && (
-          <div className="results__tags-summary">
-            {tags.map(t => (
-              <span key={t} className="result-tag">{t.replace(/-/g, " ")}</span>
-            ))}
-          </div>
-        )}
-        <div className="results__count">
-          {hasResults
-            ? `${results.length} book${results.length !== 1 ? "s" : ""} found`
-            : "no books found"}
-        </div>
-      </div>
-
-      {/* Results list */}
-      <div className="results__list">
-        {hasResults ? (
-          results.map((book, i) => (
-            <div
-              key={book.id}
-              className="result-item"
-              style={{ animationDelay: `${i * 0.08}s` }}
-            >
-              <BookCard
-                book={book}
-                onSelect={onBookSelect}
-                rank={`#${String(i + 1).padStart(2, "0")}`}
-              />
+    <div className="search-results-page">
+      <div className="results-header">
+        <button className="back-btn" onClick={onBack}>← back</button>
+        <div className="query-summary">
+          <span className="mode-label">{formatMode(mode)}</span>
+          {query && <span className="query-text">"{query}"</span>}
+          {tags.length > 0 && (
+            <div className="tag-list">
+              {tags.map(tag => <span key={tag} className="tag-pill">{tag}</span>)}
             </div>
-          ))
-        ) : (
-          <div className="results__empty">
-            <div className="empty__icon">◌</div>
-            <p className="empty__title">The shelves are bare</p>
-            <p className="empty__body">
-              No books matched your search. Try different phrasing, a different mode,
-              or broaden your query.
-            </p>
-            <button className="empty__back" onClick={onBack}>← try another search</button>
-          </div>
+          )}
+        </div>
+        {source === 'mock_fallback' && (
+          <div className="source-notice">showing sample results</div>
         )}
       </div>
 
-      {hasResults && (
-        <div className="results__footer">
-          <button className="results__new-search" onClick={onBack}>
-            ← new search
-          </button>
-          <p className="results__note">
-            Results ranked by semantic relevance. Every match shows why it was selected.
-          </p>
+      {loading && (
+        <div className="results-grid">
+          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
         </div>
       )}
+
+      {!loading && error && (
+        <div className="error-state">
+          <p className="error-message">{error}</p>
+          <button className="retry-btn" onClick={refetch}>try again</button>
+        </div>
+      )}
+
+      {!loading && !error && results.length === 0 && (
+        <div className="empty-state">
+          <p>no books found.</p>
+          <button className="retry-btn" onClick={onBack}>← adjust search</button>
+        </div>
+      )}
+
+      {!loading && results.length > 0 && (
+        <>
+          <p className="results-count">{results.length} books found</p>
+          <div className="results-grid">
+            {results.map(book => (
+              <BookCard key={book.id} book={book} onClick={() => onBookSelect(book)} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
-  );
+  )
+}
+
+function SkeletonCard() {
+  return (
+    <div className="book-card skeleton-card" aria-hidden="true">
+      <div className="skeleton skeleton-cover" />
+      <div className="skeleton-body">
+        <div className="skeleton skeleton-title" />
+        <div className="skeleton skeleton-author" />
+        <div className="skeleton skeleton-bar" />
+      </div>
+    </div>
+  )
+}
+
+function formatMode(mode) {
+  const labels = {
+    vibe: 'vibe search', fragment: 'fragment',
+    mood_board: 'mood board', image: 'image search',
+    epilogue: 'epilogue', special_mentions: 'special mentions',
+  }
+  return labels[mode] || mode
 }

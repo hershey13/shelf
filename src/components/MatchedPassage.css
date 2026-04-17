@@ -1,0 +1,107 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   src/components/MatchedPassage.css
+   Phase 3 — Matched Passage + Confidence Bar Styles
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Matched passage ────────────────────────────────────────────────────────── */
+
+.matched-passage {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--color-bg-secondary, #f5f2ed);
+  border-left: 2px solid var(--color-accent, #6b5b45);
+  border-radius: 0 6px 6px 0;
+}
+
+.matched-passage__anatomy {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--color-accent, #6b5b45);
+}
+
+/* Different anatomy types get different accent colours */
+.matched-passage__anatomy--dedication {
+  color: #9b6b8a;
+}
+
+.matched-passage__anatomy--epigraph {
+  color: #5a7a6b;
+}
+
+.matched-passage__anatomy--opening_line {
+  color: var(--color-accent, #6b5b45);
+}
+
+.matched-passage__text {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--color-text-secondary, #555);
+  line-height: 1.6;
+  margin: 0;
+  font-family: var(--font-serif, Georgia, serif);
+}
+
+/* Highlighted matched words */
+.fragment-match {
+  background: rgba(107, 91, 69, 0.15);
+  color: var(--color-text, #1a1a1a);
+  border-radius: 2px;
+  padding: 0 2px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* ── Confidence bar ─────────────────────────────────────────────────────────── */
+
+.confidence-bar {
+  position: relative;
+  height: 3px;
+  background: var(--color-border, rgba(0,0,0,0.08));
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.confidence-bar__fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.confidence-bar--high .confidence-bar__fill {
+  background: var(--color-accent, #6b5b45);
+}
+
+.confidence-bar--mid .confidence-bar__fill {
+  background: #a89070;
+}
+
+.confidence-bar--low .confidence-bar__fill {
+  background: var(--color-border, rgba(0,0,0,0.2));
+}
+
+.confidence-bar__label {
+  position: absolute;
+  right: 0;
+  top: -18px;
+  font-size: 0.65rem;
+  color: var(--color-text-muted, #aaa);
+}
+
+/* ── Dark mode ──────────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  .matched-passage {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .fragment-match {
+    background: rgba(200, 170, 130, 0.2);
+    color: var(--color-text, #e8e4dc);
+  }
+}

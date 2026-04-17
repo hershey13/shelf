@@ -1,0 +1,113 @@
+/* src/components/ImageUpload.css */
+
+.image-upload { width: 100%; }
+
+/* ── Drop zone ──────────────────────────────────────────────────────────────── */
+
+.image-upload__dropzone {
+  border: 1.5px dashed var(--color-border, rgba(0,0,0,0.18));
+  border-radius: 14px;
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+  background: transparent;
+  outline: none;
+}
+
+.image-upload__dropzone:hover:not(.disabled),
+.image-upload__dropzone:focus-visible {
+  border-color: var(--color-accent, #6b5b45);
+  background: var(--color-bg-secondary, rgba(0,0,0,0.02));
+}
+
+.image-upload__dropzone.dragging {
+  border-color: var(--color-accent, #6b5b45);
+  background: var(--color-accent-light, rgba(107,91,69,0.05));
+}
+
+.image-upload__dropzone.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Icon */
+.image-upload__icon {
+  color: var(--color-text-muted, #bbb);
+  transition: color 0.15s;
+}
+
+.image-upload__dropzone:hover:not(.disabled) .image-upload__icon,
+.image-upload__dropzone.dragging .image-upload__icon {
+  color: var(--color-accent, #6b5b45);
+}
+
+/* CTA text */
+.image-upload__cta {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary, #666);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Input type pills */
+.image-upload__types {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.image-upload__type {
+  font-size: 0.7rem;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--color-bg-secondary, #f0ece4);
+  color: var(--color-text-secondary, #777);
+  border: 0.5px solid var(--color-border, rgba(0,0,0,0.08));
+}
+
+/* Hidden input */
+.image-upload__input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Preview state ──────────────────────────────────────────────────────────── */
+
+.image-upload__preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-upload__preview-img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 0.5px solid var(--color-border, rgba(0,0,0,0.1));
+}
+
+.image-upload__clear {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #aaa);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 0;
+  transition: color 0.15s;
+}
+
+.image-upload__clear:hover {
+  color: var(--color-text-secondary, #666);
+}

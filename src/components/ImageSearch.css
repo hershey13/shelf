@@ -1,0 +1,91 @@
+/* src/components/ImageSearch.css */
+
+.image-search { width: 100%; }
+
+/* ── Processing state ───────────────────────────────────────────────────────── */
+
+.image-search__processing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 2.5rem 1rem;
+  text-align: center;
+}
+
+/* Spinner ring */
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.image-search__spinner {
+  width: 36px;
+  height: 36px;
+  border: 2.5px solid var(--color-border, rgba(0,0,0,0.1));
+  border-top-color: var(--color-accent, #6b5b45);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.image-search__processing-text {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary, #666);
+  margin: 0;
+}
+
+/* Progress bar */
+.image-search__progress-track {
+  width: 200px;
+  height: 3px;
+  background: var(--color-border, rgba(0,0,0,0.08));
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.image-search__progress-fill {
+  height: 100%;
+  background: var(--color-accent, #6b5b45);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.image-search__processing-hint {
+  font-size: 0.72rem;
+  color: var(--color-text-muted, #bbb);
+  margin: 0;
+  max-width: 260px;
+  line-height: 1.5;
+}
+
+/* ── Error state ────────────────────────────────────────────────────────────── */
+
+.image-search__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.image-search__error-text {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary, #666);
+  margin: 0;
+  max-width: 300px;
+  line-height: 1.55;
+}
+
+.image-search__retry {
+  font-size: 0.8rem;
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border, rgba(0,0,0,0.15));
+  background: transparent;
+  color: var(--color-text-secondary, #555);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.image-search__retry:hover {
+  background: var(--color-bg-secondary, #f5f2ed);
+}
