@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Home.css";
 
+
 export default function Home({ onEnter }) {
   const [flipped, setFlipped] = useState(false);
   const [entered, setEntered] = useState(false);

@@ -1,0 +1,65 @@
+
+.rh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1.1rem;
+  background: transparent;
+  border: 1px solid rgba(200, 151, 58, 0.28);
+  border-radius: 4px;
+  color: var(--gold, #c8973a);
+  font-family: var(--font-display, 'Georgia', serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.18s ease;
+  white-space: nowrap;
+  z-index: 50;
+}
+
+.rh-btn:hover {
+  background: rgba(200, 151, 58, 0.08);
+  border-color: var(--gold, #c8973a);
+  transform: translateY(-1px);
+}
+
+.rh-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Arrow micro-animation ─────────────────────────────────────────────────── */
+
+.rh-btn__arrow {
+  display: inline-block;
+  transition: transform 0.18s ease;
+}
+
+.rh-btn:hover .rh-btn__arrow {
+  transform: translateX(-3px);
+}
+
+/* ── corner variant (fixed, top-left) ─────────────────────────────────────── */
+
+.rh-btn--corner {
+  position: absolute;
+  top: 1.8rem;
+  left: 1.8rem;
+}
+
+/* ── inline variant (normal document flow) ────────────────────────────────── */
+
+.rh-btn--inline {
+  position: static;
+}
+
+/* ── Responsive: on very small screens collapse to icon only ──────────────── */
+
+@media (max-width: 400px) {
+  .rh-btn--corner .rh-btn__text {
+    display: none;
+  }
+  .rh-btn--corner .rh-btn__arrow {
+    font-size: 1rem;
+  }
+}

@@ -1,12 +1,18 @@
 import "./BookDetails.css";
+import ReturnHome from '../components/ReturnHome'
 
 export default function BookDetails({ book, onBack, onSearch }) {
   if (!book) return null;
 
+  // Defensive defaults — API results may omit these arrays entirely
+  const genres = book.genres ?? [];
+  const mood   = book.mood   ?? [];
+  const tags   = book.tags   ?? [];
+
   const anatomySections = [
-    { id: "epigraph", label: "Epigraph", icon: "◈", content: book.epigraph },
-    { id: "dedication", label: "Dedication", icon: "☽", content: book.dedication },
-    { id: "opening", label: "Opening line", icon: "✦", content: book.opening },
+    { id: "epigraph",   label: "Epigraph",     icon: "◈", content: book.epigraph   },
+    { id: "dedication", label: "Dedication",   icon: "☽", content: book.dedication },
+    { id: "opening",    label: "Opening line", icon: "✦", content: book.opening    },
   ].filter(s => s.content);
 
   return (
@@ -37,29 +43,38 @@ export default function BookDetails({ book, onBack, onSearch }) {
         </div>
 
         <div className="details__hero-info">
-          <div className="details__genre-tags">
-            {book.genres.map(g => (
-              <span key={g} className="genre-tag">{g}</span>
-            ))}
-          </div>
+          {genres.length > 0 && (
+            <div className="details__genre-tags">
+              {genres.map(g => (
+                <span key={g} className="genre-tag">{g}</span>
+              ))}
+            </div>
+          )}
+
           <h1 className="details__title">{book.title}</h1>
           <p className="details__author">by {book.author}</p>
 
           <div className="details__stats">
             <span className="stat"><span className="stat__label">year</span> {book.year}</span>
-            <span className="stat__divider">·</span>
-            <span className="stat"><span className="stat__label">pages</span> {book.pages}</span>
-            <span className="stat__divider">·</span>
-            <span className="stat"><span className="stat__label">rating</span> {book.rating} / 5</span>
+            {book.pages && <>
+              <span className="stat__divider">·</span>
+              <span className="stat"><span className="stat__label">pages</span> {book.pages}</span>
+            </>}
+            {book.rating && <>
+              <span className="stat__divider">·</span>
+              <span className="stat"><span className="stat__label">rating</span> {book.rating} / 5</span>
+            </>}
           </div>
 
-          <p className="details__synopsis">{book.synopsis}</p>
+          {book.synopsis && <p className="details__synopsis">{book.synopsis}</p>}
 
-          <div className="details__mood-tags">
-            {book.mood.map(m => (
-              <span key={m} className="mood-chip">{m}</span>
-            ))}
-          </div>
+          {mood.length > 0 && (
+            <div className="details__mood-tags">
+              {mood.map(m => (
+                <span key={m} className="mood-chip">{m}</span>
+              ))}
+            </div>
+          )}
 
           {book.matchReason && (
             <div className="details__match-reason">
@@ -95,14 +110,16 @@ export default function BookDetails({ book, onBack, onSearch }) {
       )}
 
       {/* Tags */}
-      <div className="details__tags-block">
-        <div className="tags-block__header">themes &amp; tropes</div>
-        <div className="tags-block__list">
-          {book.tags.map(tag => (
-            <span key={tag} className="detail-tag">{tag}</span>
-          ))}
+      {tags.length > 0 && (
+        <div className="details__tags-block">
+          <div className="tags-block__header">themes &amp; tropes</div>
+          <div className="tags-block__list">
+            {tags.map(tag => (
+              <span key={tag} className="detail-tag">{tag}</span>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Footer CTA */}
       <div className="details__footer">

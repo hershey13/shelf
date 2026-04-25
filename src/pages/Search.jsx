@@ -6,7 +6,7 @@ import SearchExamples from "../components/SearchExamples";
 import { searchBooks } from "../data/books";
 import FragmentInput from '../components/FragmentInput'
 import ImageSearch from '../components/ImageSearch'
-
+import ReturnHome from "../components/ReturnHome";
 import "./Search.css";
 
 const SEARCH_MODES = [
@@ -93,25 +93,20 @@ export default function Search({ onSearch, onBookSelect, onBackHome }) {
     setImageStep("confirm");
   };
 
-  const handleSearch = () => {
-    const searchQuery = activeMode === "image" ? imageText : query;
-    const mapMode = activeMode === "epilogue" || activeMode === "special" ? "fragment" : activeMode;
+ // ✅ REPLACE WITH — just pass params, SearchResults fetches via useBookSearch
+const handleSearch = () => {
+  const searchQuery = activeMode === "image" ? imageText : query;
+  const modeMap = { epilogue: "epilogue", special: "special_mentions" };
+  const mappedMode = modeMap[activeMode] || activeMode;
 
-    setIsSearching(true);
-    setTimeout(() => {
-      const results = searchBooks(searchQuery, mapMode, selectedTags, anatomy);
-      onSearch({
-        query: searchQuery,
-        mode: activeMode,
-        tags: selectedTags,
-        anatomy,
-        results,
-        modeLabel: currentMode.label,
-      });
-      setIsSearching(false);
-    }, 800);
-  };
-
+  onSearch({
+    query: searchQuery,
+    mode: mappedMode,
+    tags: selectedTags,
+    anatomy,
+    modeLabel: currentMode.label,
+  });
+};
   const canSearch =
     (activeMode === "mood" && selectedTags.length > 0) ||
     (activeMode === "image" && imageStep === "confirm" && imageText) ||
@@ -121,16 +116,8 @@ export default function Search({ onSearch, onBookSelect, onBackHome }) {
     <div className="search-hub">
       {/* Ambient bg */}
       <div className="hub__bg" />
-     <button
-  type="button"
-  className="return-home-btn"
-  onClick={() => {
-    console.log("home clicked");
-    onBackHome();
-  }}
->
-  ← Return Home
-</button>
+     <ReturnHome onClick={onBackHome} variant="corner" />
+ 
 
       {/* Header */}
       <header className="hub__header">

@@ -1,42 +1,40 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { searchBooks } from '../api/bookSearch'
- 
+
 export function useBookSearch({ mode, query, tags = [], anatomy = '', enabled = true }) {
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [source, setSource] = useState(null)
   const [meta, setMeta] = useState({})
- 
+
   const abortRef = useRef(null)
- 
+
+  // ✅ runSearch defined BEFORE useEffect and return
   const runSearch = useCallback(async () => {
     if (!enabled || (!query?.trim() && !tags?.length)) {
       setResults([])
       setLoading(false)
       return
     }
- 
+
     if (abortRef.current) abortRef.current.abort()
     abortRef.current = new AbortController()
- 
+
     setLoading(true)
     setError(null)
- 
+
     try {
       const response = await searchBooks({ mode, query, tags, anatomy })
- 
+
       if (abortRef.current?.signal?.aborted) return
- 
-      // ── Phase 3 addition ──────────────────────────────────────────────────
-      // Attach the original query to every result so BookCard can highlight
-      // matched words in the MatchedPassage component.
+
+      // Attach original query to every result so BookCard can highlight matched words
       const resultsWithQuery = response.results.map(book => ({
         ...book,
         _query: query,
       }))
-      // ─────────────────────────────────────────────────────────────────────
- 
+
       setResults(resultsWithQuery)
       setSource(response.source)
       setMeta(response.meta)
@@ -50,20 +48,23 @@ export function useBookSearch({ mode, query, tags = [], anatomy = '', enabled = 
       }
     }
   }, [mode, query, JSON.stringify(tags), anatomy, enabled])
- 
+
   useEffect(() => {
     runSearch()
     return () => { if (abortRef.current) abortRef.current.abort() }
   }, [runSearch])
- 
+
+  // ✅ single return at the end of the function
   return { results, loading, error, source, meta, refetch: runSearch }
-}
- 
+} // ✅ closing brace for useBookSearch
+
+// ─── useBookDetails ───────────────────────────────────────────────────────────
+
 export function useBookDetails(book) {
   const [details, setDetails] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
- 
+
   useEffect(() => {
     if (!book) return
     async function fetchDetails() {
@@ -83,7 +84,6 @@ export function useBookDetails(book) {
     }
     fetchDetails()
   }, [book?.id])
- 
+
   return { details, loading, error }
 }
- 

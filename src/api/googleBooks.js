@@ -34,41 +34,38 @@ const BASE_URL = 'https://www.googleapis.com/books/v1'
 
 export async function searchGoogleBooks(query, { maxResults = 12, filter = '' } = {}) {
   if (!query?.trim()) return []
+  return _fetchGoogleBooks(query, { maxResults, filter, withKey: true })
+}
 
-  // Build the URL — Google Books uses simple query params
+async function _fetchGoogleBooks(query, { maxResults, filter, withKey }) {
   const params = new URLSearchParams({
     q: query,
     maxResults,
     printType: 'books',
     langRestrict: 'en',
-    ...(API_KEY && { key: API_KEY }),
+    ...(withKey && API_KEY && { key: API_KEY }),
     ...(filter && { filter }),
   })
 
   try {
     const response = await fetch(`${BASE_URL}/volumes?${params}`)
 
-    // CONCEPT: HTTP status check
-    // fetch() doesn't throw on 4xx/5xx errors — you have to check response.ok yourself
-    if (!response.ok) {
-      const err = await response.json()
-      console.error('[Google Books] API error:', err.error?.message)
-      return []
+    // If key is wrong/missing, retry once without it
+    if (response.status === 401 && withKey) {
+      console.warn('[Google Books] API key rejected — retrying without key')
+      return _fetchGoogleBooks(query, { maxResults, filter, withKey: false })
     }
 
+    if (!response.ok) return []
     const data = await response.json()
-
-    // data.items is the array of books — it might not exist if no results
     if (!data.items?.length) return []
-
-    // Reshape each Google book into your app's book format
     return data.items.map(normaliseGoogleBook)
+
   } catch (error) {
     console.error('[Google Books] Network error:', error)
     return []
   }
 }
-
 // ─── getBookByISBN ─────────────────────────────────────────────────────────────
 //
 //  Fetch a single specific book by its ISBN.

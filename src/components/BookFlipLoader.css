@@ -1,0 +1,206 @@
+/* src/components/BookFlipLoader.css
+   Uses your existing CSS variables: --ink, --gold, --parchment, --ash,
+   --font-display, --font-accent. No new tokens needed. */
+
+/* ── Overlay ──────────────────────────────────────────────────────────────── */
+
+.bfl__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: bfl-fadein 0.3s ease forwards;
+}
+
+@keyframes bfl-fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.bfl__wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+/* ── Book shell ───────────────────────────────────────────────────────────── */
+
+.bfl__book {
+  position: relative;
+  width: 120px;
+  height: 160px;
+  /* Perspective so the cover flip looks 3-D */
+  perspective: 600px;
+}
+
+/* ── Spine ─────────────────────────────────────────────────────────────────── */
+
+.bfl__spine {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(200,151,58,0.7) 0%,
+    rgba(140,95,30,0.9) 50%,
+    rgba(200,151,58,0.6) 100%
+  );
+  border-radius: 2px 0 0 2px;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.5);
+}
+
+/* ── Covers ────────────────────────────────────────────────────────────────── */
+
+.bfl__cover {
+  position: absolute;
+  top: 0;
+  left: 14px;           /* sits right of spine */
+  width: 106px;
+  height: 160px;
+  border-radius: 0 3px 3px 0;
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+.bfl__cover--back {
+  background: linear-gradient(
+    135deg,
+    rgba(92,61,30,0.9),
+    rgba(60,40,18,0.95)
+  );
+  border: 1px solid rgba(200,151,58,0.15);
+  z-index: 0;
+}
+
+/* ── Front cover — the flipping element ──────────────────────────────────── */
+
+.bfl__cover--front {
+  background: linear-gradient(
+    160deg,
+    rgba(50,38,20,0.98) 0%,
+    rgba(72,52,24,0.96) 60%,
+    rgba(92,65,28,0.94) 100%
+  );
+  border: 1px solid rgba(200,151,58,0.25);
+  z-index: 10;
+  animation: bfl-coverflip 2.4s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes bfl-coverflip {
+  0%   { transform: rotateY(0deg);    }
+  /* pause closed */
+  20%  { transform: rotateY(0deg);    }
+  /* swing open */
+  50%  { transform: rotateY(-165deg); }
+  /* pause open */
+  70%  { transform: rotateY(-165deg); }
+  /* swing closed */
+  100% { transform: rotateY(0deg);    }
+}
+
+/* ── Decorative lines on cover ─────────────────────────────────────────────── */
+
+.bfl__cover-deco {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.bfl__cover-deco span {
+  display: block;
+  height: 1px;
+  background: rgba(200,151,58,0.3);
+}
+
+.bfl__cover-deco span:nth-child(1) { width: 56px; }
+.bfl__cover-deco span:nth-child(2) { width: 36px; }
+.bfl__cover-deco span:nth-child(3) { width: 48px; }
+
+/* ── Page stack ──────────────────────────────────────────────────────────── */
+
+.bfl__pages {
+  position: absolute;
+  top: 4px;
+  left: 18px;
+  width: 98px;
+  height: 152px;
+  z-index: 5;
+}
+
+.bfl__page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 98px;
+  height: 152px;
+  border-radius: 0 2px 2px 0;
+  transform-origin: left center;
+  background: rgba(240, 230, 200, 0.88);
+  border-right: 1px solid rgba(200,151,58,0.2);
+}
+
+/* Each page flips with a slight delay after the other — cascade effect */
+.bfl__page--1 { animation: bfl-pageflip 2.4s 0.10s ease-in-out infinite; opacity: 0.95; }
+.bfl__page--2 { animation: bfl-pageflip 2.4s 0.22s ease-in-out infinite; opacity: 0.88; }
+.bfl__page--3 { animation: bfl-pageflip 2.4s 0.34s ease-in-out infinite; opacity: 0.80; }
+.bfl__page--4 { animation: bfl-pageflip 2.4s 0.46s ease-in-out infinite; opacity: 0.72; }
+.bfl__page--5 { animation: bfl-pageflip 2.4s 0.58s ease-in-out infinite; opacity: 0.64; }
+
+@keyframes bfl-pageflip {
+  0%   { transform: rotateY(0deg);    }
+  20%  { transform: rotateY(0deg);    }
+  50%  { transform: rotateY(-155deg); }
+  70%  { transform: rotateY(-155deg); }
+  100% { transform: rotateY(0deg);    }
+}
+
+/* ── Label ───────────────────────────────────────────────────────────────── */
+
+.bfl__label {
+  font-family: var(--font-accent, 'Georgia', serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ash, #9a9080);
+  letter-spacing: 0.06em;
+  text-align: center;
+  animation: bfl-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes bfl-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
+}
+
+/* ── Dot pulse ───────────────────────────────────────────────────────────── */
+
+.bfl__dots {
+  display: flex;
+  gap: 6px;
+}
+
+.bfl__dots span {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(200,151,58,0.5);
+  animation: bfl-dot 1.2s ease-in-out infinite;
+}
+
+.bfl__dots span:nth-child(2) { animation-delay: 0.2s; }
+.bfl__dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bfl-dot {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+  40%           { transform: scale(1.3); opacity: 1;   }
+}
