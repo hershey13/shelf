@@ -55,15 +55,15 @@ const SEARCH_MODES = [
     placeholder: "e.g. one where you find out they stayed together ten years later…",
     exampleTag: "I remember the ending",
   },
-  {
-    id: "special",
-    icon: "☽",
-    label: "Special mentions",
-    sublabel: "dedication · epigraph · acknowledgment",
-    description: "Search inside the most emotionally loaded text in any book.",
-    placeholder: "e.g. for everyone who felt too much — or a remembered dedication",
-    exampleTag: "I remember the dedication",
-  },
+  // {
+  //   id: "special",
+  //   icon: "☽",
+  //   label: "Special mentions",
+  //   sublabel: "dedication · epigraph · acknowledgment",
+  //   description: "Search inside the most emotionally loaded text in any book.",
+  //   placeholder: "e.g. for everyone who felt too much — or a remembered dedication",
+  //   exampleTag: "I remember the dedication",
+  // },
 ];
 
 export default function Search({ onSearch, onBookSelect, onBackHome }) {

@@ -38,7 +38,7 @@ export default function Home({ onEnter }) {
       {/* Header ornament */}
       <div className="home__header">
         <span className="ornament">⸻</span>
-        <span className="home__wordmark">shelf</span>
+        <span className="home__wordmark">SHELF</span>
         <span className="ornament">⸻</span>
       </div>
 
